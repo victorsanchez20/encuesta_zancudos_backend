@@ -18,10 +18,10 @@ public class Persona {
 
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "docIdentidad", nullable = false, unique = true)
-    private long docIdentidad;
+    private Long docIdentidad;
 
     @Column(name = "direccion", nullable = false)
     private String direccion;

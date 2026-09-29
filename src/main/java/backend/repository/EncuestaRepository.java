@@ -19,9 +19,8 @@ public interface EncuestaRepository extends JpaRepository<Encuesta, Long>{
     @Query("SELECT COUNT(*) FROM Encuesta WHERE estadoPozo = 'QUIERO_LARVICIDAS'")
     Long total_QUIERO_LARVICIDAS();
 
-    @Query("SELECT COUNT(*) FROM Encuesta WHERE estadoPozo = 'SIN_PECES'")
-    Long total_SIN_PECES();
-
+    @Query("SELECT COUNT(*) FROM Encuesta WHERE estadoPozo = 'SIN_POZO'")
+    Long total_SIN_POZO();
 
     @Query("SELECT e FROM Encuesta e ORDER BY e.fechaRegistro DESC")
     List<Encuesta> ultimasRespuestas(Pageable pageable);

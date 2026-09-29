@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import backend.model.Encuesta;
 import backend.service.EncuestaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController 
@@ -30,9 +32,9 @@ public class EncuestaController {
         return ResponseEntity.ok(encuestaService.ultimasRespuestas());
     }
 
-    @GetMapping("/total_sin_peces")
-    public ResponseEntity<Long> totalSinPeces() {
-        return ResponseEntity.ok(encuestaService.totalSinPeces());
+    @GetMapping("/total_sin_pozo")
+    public ResponseEntity<Long> totalSinPozos() {
+        return ResponseEntity.ok(encuestaService.totalSinPozo());
     } 
     
     @GetMapping("/total_con_peces")
@@ -44,4 +46,10 @@ public class EncuestaController {
     public ResponseEntity<Long> totalQuieroPeces() {
         return ResponseEntity.ok(encuestaService.totalQuieroPeces());
     }
+
+    @GetMapping("/total_quiero_larvicidas")
+    public ResponseEntity<Long> totalQuieroLarvicidas() {
+        return ResponseEntity.ok(encuestaService.totalQuieroLarvicidas());
+    }
+    
 }
