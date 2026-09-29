@@ -1,8 +1,6 @@
 package backend.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import backend.dto.AdministradorResponse;
 import backend.model.Administrador;
 import backend.service.AdministradorService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController 
@@ -22,12 +22,12 @@ public class AdministradorController {
 
 
     @PostMapping
-    public ResponseEntity<Administrador> crearAdministrador(@RequestBody Administrador administrador) {    
+    public ResponseEntity<AdministradorResponse> crearAdministrador(@RequestBody Administrador administrador) {    
         
         Administrador nuevoAdministrador = administradorService.crearAdministrador(administrador);
 
         return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(nuevoAdministrador);
+                    .body(AdministradorResponse.from(nuevoAdministrador));
     }
 }

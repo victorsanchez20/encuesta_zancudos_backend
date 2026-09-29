@@ -22,6 +22,9 @@ public interface EncuestaRepository extends JpaRepository<Encuesta, Long>{
     @Query("SELECT COUNT(*) FROM Encuesta WHERE estadoPozo = 'SIN_POZO'")
     Long total_SIN_POZO();
 
-    @Query("SELECT e FROM Encuesta e ORDER BY e.fechaRegistro DESC")
+    @Query("SELECT e FROM Encuesta e JOIN FETCH e.persona ORDER BY e.fechaRegistro DESC")
+    List<Encuesta> findTodasConPersona();
+
+    @Query("SELECT e FROM Encuesta e JOIN FETCH e.persona ORDER BY e.fechaRegistro DESC")
     List<Encuesta> ultimasRespuestas(Pageable pageable);
 }

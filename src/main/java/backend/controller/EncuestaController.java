@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import backend.model.Encuesta;
 import backend.service.EncuestaService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController 
-@RequestMapping("api/encuestas")
+@RequestMapping("/api/encuestas")
 @RequiredArgsConstructor 
 public class RespuestaController {
 
