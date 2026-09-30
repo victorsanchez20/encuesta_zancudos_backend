@@ -4,7 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -32,32 +36,33 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${app.cors.max-age:3600}")
     private long maxAge;
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        CorsRegistration mapping = registry.addMapping(API_PATTERN)
-                .allowedMethods(allowedMethods)
-                .allowedHeaders(allowedHeaders)
-                .allowCredentials(allowCredentials)
-                .maxAge(maxAge);
 
+    @Bean 
+    public CorsConfigurationSource corsConfigurationSource() {
         List<String> origins = Arrays.stream(allowedOrigins)
-                .map(String::trim)
-                .filter(origin -> !origin.isEmpty())
-                .toList();
+            .map(String::trim)
+            .filter(origin -> !origin.isEmpty())
+            .toList();
+
+        CorsConfiguration config = new CorsConfiguration();
 
         if (origins.contains("*")) {
-            mapping.allowedOriginPatterns("*");
-        } else {
-            mapping.allowedOrigins(origins.toArray(String[]::new));
+            config.setAllowedOriginPatterns(origins);
+        }
+        else {
+            config.setAllowedOrigins(origins);
         }
 
-        String[] exposed = Arrays.stream(exposedHeaders)
-                .map(String::trim)
-                .filter(header -> !header.isEmpty())
-                .toArray(String[]::new);
+        config.setAllowedMethods(Arrays.stream(allowedMethods).map(String::trim).toList());
+        config.setAllowedHeaders(Arrays.stream(allowedHeaders).map(String::trim).toList());
+        config.setExposedHeaders(Arrays.stream(exposedHeaders).map(String::trim)
+            .filter(header -> !header.isEmpty()).toList());
+        config.setAllowCredentials(allowCredentials);
+        config.setMaxAge(maxAge);
 
-        if (exposed.length > 0) {
-            mapping.exposedHeaders(exposed);
-        }
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration(API_PATTERN, config);
+        return source;
     }
+
 }

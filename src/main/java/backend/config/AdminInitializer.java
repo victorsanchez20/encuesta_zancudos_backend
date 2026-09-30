@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "app.admin.usuario")
+@ConditionalOnProperty(name = {"app.admin.usuario", "app.admin.password"})
 public class AdminInitializer implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(AdminInitializer.class);
